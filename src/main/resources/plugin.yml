@@ -1,0 +1,6 @@
+output: GUIFramework
+version: 1.0
+main: com.minebone.guiframework.example.MainClass
+commands:
+  testframework:
+    description: Testing
