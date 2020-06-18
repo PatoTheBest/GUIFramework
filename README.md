@@ -1,6 +1,6 @@
 # GuiFramework
 
-Minecraft doesn't really have a GUI api developers can use. This project takes advantage of the existing minecraft menus in order to create interactable menus.
+Minecraft doesn't really have a GUI api developers can use. This project takes advantage of the existing minecraft inventories in order to create interactable menus.
 
 ## Example
 
