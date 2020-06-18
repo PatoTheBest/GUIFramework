@@ -1,10 +1,11 @@
 package me.patothebest.guiframework.gui.inventory.button;
 
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public interface AnvilButtonCancelAction<PluginType extends JavaPlugin> {
+public interface AnvilButtonCancelAction {
 
-    void onCancel(PluginType plugin, Player player);
+    void onCancel(Plugin plugin, Player player);
 
 }

@@ -6,21 +6,21 @@ import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class ClickTypeButton<PluginType extends JavaPlugin> implements GUIButton<PluginType> {
+public class ClickTypeButton implements GUIButton {
 
     private ItemStack item;
-    protected ClickTypeAction<PluginType> action;
+    protected ClickTypeAction action;
 
     public ClickTypeButton(ItemStack item) {
         this.item = item;
     }
 
-    public ClickTypeButton(ItemStack item, ClickTypeAction<PluginType> buttonAction) {
+    public ClickTypeButton(ItemStack item, ClickTypeAction buttonAction) {
         this.item = item;
         this.action = buttonAction;
     }
 
-    public ClickTypeButton<PluginType> action(ClickTypeAction<PluginType> action) {
+    public ClickTypeButton action(ClickTypeAction action) {
         this.action = action;
         return this;
     }
@@ -29,7 +29,7 @@ public class ClickTypeButton<PluginType extends JavaPlugin> implements GUIButton
         return item;
     }
 
-    public void click(ClickType clickType, GUIPage<PluginType> page) {
+    public void click(ClickType clickType, GUIPage page) {
         if(action == null) {
             return;
         }

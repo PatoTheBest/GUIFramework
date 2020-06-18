@@ -3,11 +3,11 @@ package me.patothebest.guiframework.gui.inventory.button;
 import me.patothebest.guiframework.gui.inventory.GUIPage;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
-import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.plugin.Plugin;
 
 @FunctionalInterface
-public interface ClickTypeAction<PluginType extends JavaPlugin> {
+public interface ClickTypeAction {
 
-    void onClick(PluginType plugin, Player player, ClickType clickType, GUIPage<PluginType> page);
+    void onClick(Plugin plugin, Player player, ClickType clickType, GUIPage page);
 
 }

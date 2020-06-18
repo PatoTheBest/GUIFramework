@@ -11,14 +11,15 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.HashMap;
 
-public abstract class GUIPage<PluginType extends JavaPlugin> implements Listener {
+public abstract class GUIPage implements Listener {
 
     protected final HashMap<Integer, GUIButton> buttons;
-    protected final PluginType plugin;
+    protected final Plugin plugin;
     protected final int size;
     protected boolean overrideClose = false;
     protected boolean blockInventoryMovement = true;
@@ -27,12 +28,12 @@ public abstract class GUIPage<PluginType extends JavaPlugin> implements Listener
     private String name;
     private Inventory menu;
 
-    public GUIPage(PluginType plugin, Player player, String rawName, int size, boolean override) {
+    public GUIPage(Plugin plugin, Player player, String rawName, int size, boolean override) {
         this(plugin, player, rawName, size);
         this.overrideClose = true;
     }
 
-    public GUIPage(PluginType plugin, Player player, String rawName, int size) {
+    public GUIPage(Plugin plugin, Player player, String rawName, int size) {
         this.user = player;
         Utils.invokeStaticMethod(Utils.getCBSClass("event.CraftEventFactory"), "handleInventoryCloseEvent", new Class[] {Utils.getNMSClass("EntityHuman")}, Utils.invokeMethod(player, "getHandle", new Class[] {}, null));
 
@@ -48,7 +49,6 @@ public abstract class GUIPage<PluginType extends JavaPlugin> implements Listener
         user.openInventory(menu);
     }
 
-    @SuppressWarnings("deprecation")
     public void build() {
         if(!getPlayer().isOnline()) {
             destroy();
@@ -59,13 +59,13 @@ public abstract class GUIPage<PluginType extends JavaPlugin> implements Listener
             getPlayer().updateInventory();
         } catch (Exception e) {
             e.printStackTrace();
-            new FailedPage<>(plugin, getPlayer(), "Error building GUI");
+            new FailedPage(plugin, getPlayer(), "Error building GUI");
         }
     }
 
     public abstract void buildPage();
 
-    public PluginType getPlugin() {
+    public Plugin getPlugin() {
         return plugin;
     }
 

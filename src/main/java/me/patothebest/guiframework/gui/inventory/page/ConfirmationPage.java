@@ -8,14 +8,15 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public abstract class ConfirmationPage<PluginType extends JavaPlugin> extends GUIPage<PluginType> {
+public abstract class ConfirmationPage extends GUIPage {
 
     private ItemStack infoTop;
     private ItemStack infoMiddle;
 
-    public ConfirmationPage(PluginType plugin, Player player, ItemStack infoTop, ItemStack infoMiddle) {
+    public ConfirmationPage(Plugin plugin, Player player, ItemStack infoTop, ItemStack infoMiddle) {
         super(plugin, player, "Confirm?", 54);
         this.infoTop = infoTop;
         this.infoMiddle = infoMiddle;

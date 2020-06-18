@@ -4,23 +4,23 @@ import com.google.common.collect.Iterators;
 import me.patothebest.guiframework.gui.inventory.GUIButton;
 import me.patothebest.guiframework.util.Utils;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.plugin.Plugin;
 
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.function.Supplier;
 
-public abstract class DynamicPaginatedUI<T, PluginType extends JavaPlugin> extends GUIMultiPage<PluginType> {
+public abstract class DynamicPaginatedUI<T> extends GUIMultiPage {
 
     private final Supplier<Collection<? extends T>> listProvider;
 
-    protected DynamicPaginatedUI(PluginType plugin, Player player, String rawName, Supplier<Collection<? extends T>> listProvider) {
+    protected DynamicPaginatedUI(Plugin plugin, Player player, String rawName, Supplier<Collection<? extends T>> listProvider) {
         super(plugin, player, rawName, Math.min(54, Utils.transformToInventorySize(listProvider.get().size())));
         this.listProvider = listProvider;
     }
 
-    protected DynamicPaginatedUI(PluginType plugin, Player player, String rawName, Supplier<Collection<? extends T>> listProvider, int size) {
+    protected DynamicPaginatedUI(Plugin plugin, Player player, String rawName, Supplier<Collection<? extends T>> listProvider, int size) {
         super(plugin, player, rawName, size);
         this.listProvider = listProvider;
     }
@@ -46,7 +46,7 @@ public abstract class DynamicPaginatedUI<T, PluginType extends JavaPlugin> exten
         }
     }
 
-    protected abstract GUIButton<PluginType> createButton(T item);
+    protected abstract GUIButton createButton(T item);
 
     @Override
     protected int getListCount() {

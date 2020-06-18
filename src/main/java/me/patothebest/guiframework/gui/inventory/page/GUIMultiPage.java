@@ -8,18 +8,19 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public abstract class GUIMultiPage<PluginType extends JavaPlugin> extends GUIPage<PluginType> {
+public abstract class GUIMultiPage extends GUIPage {
 
     protected int currentPage;
     protected int pageSize = 45;
 
-    public GUIMultiPage(PluginType plugin, Player player, String rawName) {
+    public GUIMultiPage(Plugin plugin, Player player, String rawName) {
         this(plugin, player, rawName, 54);
     }
 
-    public GUIMultiPage(PluginType plugin, Player player, String rawName, int size) {
+    public GUIMultiPage(Plugin plugin, Player player, String rawName, int size) {
         super(plugin, player, rawName, size);
     }
 
@@ -29,11 +30,11 @@ public abstract class GUIMultiPage<PluginType extends JavaPlugin> extends GUIPag
         ItemStack currentPageItem = new ItemStackBuilder().material(Material.PAPER).amount(currentPage + 1).name(ChatColor.YELLOW + "You are currently on page " + (currentPage + 1) + "");
 
         if ((currentPage + 1) * pageSize < getListCount()) {
-            addButton(new SimpleButton<>(nextPage).action((player, core, guiPage) -> {currentPage++;refresh();}), 53);
+            addButton(new SimpleButton(nextPage).action((player, core, guiPage) -> {currentPage++;refresh();}), 53);
         }
 
         if (currentPage != 0) {
-            addButton(new SimpleButton<>(previousPage).action((player, core, guiPage) -> {currentPage--;refresh();}), 45);
+            addButton(new SimpleButton(previousPage).action((player, core, guiPage) -> {currentPage--;refresh();}), 45);
         }
 
         if(getListCount() != -1) {

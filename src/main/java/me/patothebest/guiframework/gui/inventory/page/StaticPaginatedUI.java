@@ -3,6 +3,7 @@ package me.patothebest.guiframework.gui.inventory.page;
 import com.google.common.collect.Iterators;
 import me.patothebest.guiframework.gui.inventory.GUIButton;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.Collection;
@@ -10,11 +11,11 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.function.Supplier;
 
-public abstract class StaticPaginatedUI<T, PluginType extends JavaPlugin> extends GUIMultiPage<PluginType> {
+public abstract class StaticPaginatedUI<T> extends GUIMultiPage {
 
     private final Supplier<Collection<? extends T>> listProvider;
 
-    protected StaticPaginatedUI(PluginType plugin, Player player, String rawName, Supplier<Collection<? extends T>> listProvider) {
+    protected StaticPaginatedUI(Plugin plugin, Player player, String rawName, Supplier<Collection<? extends T>> listProvider) {
         super(plugin, player, rawName, 54);
         this.listProvider = listProvider;
     }
@@ -42,7 +43,7 @@ public abstract class StaticPaginatedUI<T, PluginType extends JavaPlugin> extend
         buildFooter();
     }
 
-    protected abstract GUIButton<PluginType> createButton(T item);
+    protected abstract GUIButton createButton(T item);
 
     protected void buildFooter() {};
 

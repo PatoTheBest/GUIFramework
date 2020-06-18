@@ -9,10 +9,11 @@ import me.patothebest.guiframework.itemstack.ItemStackBuilder;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 
-public class SimpleGUIExample extends GUIPage<MainClass> {
+public class SimpleGUIExample extends GUIPage {
 
-    public SimpleGUIExample(MainClass plugin, Player player) {
+    public SimpleGUIExample(Plugin plugin, Player player) {
         super(plugin, player, "Testing the gui framework", 9);
         build();
     }
@@ -23,8 +24,8 @@ public class SimpleGUIExample extends GUIPage<MainClass> {
         ItemStackBuilder anvilItem = new ItemStackBuilder().material(Material.ANVIL).name("AN ANVIL");
         ItemStackBuilder placeHolder = new ItemStackBuilder().material(Material.ITEM_FRAME).name(ChatColor.GREEN + "This is just a placeholder");
 
-        addButton(new SimpleButton<>(simpleAction, (plugin1, player, page) -> player.sendMessage("Clicked on TNT")), 2);
-        addButton(new AnvilButton<>(anvilItem).confirmAction((plugin1, player, event) -> {
+        addButton(new SimpleButton(simpleAction, (plugin1, player, page) -> player.sendMessage("Clicked on TNT")), 2);
+        addButton(new AnvilButton(anvilItem).confirmAction((plugin1, player, event) -> {
             player.sendMessage("You typed " + event.getOutput());
             event.setWillClose(true);
         }).cancelAction((plugin1, player) -> player.sendMessage("You cancelled")).slot(AnvilSlot.INPUT_LEFT, anvilItem), 4);

@@ -7,18 +7,19 @@ import me.patothebest.guiframework.gui.inventory.GUIButton;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class AnvilButton<PluginType extends JavaPlugin> implements GUIButton<PluginType> {
+public class AnvilButton implements GUIButton {
 
     private final ItemStack item;
     private final Map<AnvilSlot, ItemStack> items;
-    private AnvilButtonConfirmAction<PluginType> confirmAction;
-    private AnvilButtonCancelAction<PluginType> cancelAction;
-    private PluginType plugin;
+    private AnvilButtonConfirmAction confirmAction;
+    private AnvilButtonCancelAction cancelAction;
+    private Plugin plugin;
     private Player player;
 
     public AnvilButton(ItemStack item) {
@@ -26,7 +27,7 @@ public class AnvilButton<PluginType extends JavaPlugin> implements GUIButton<Plu
         this.items = new HashMap<>();
     }
 
-    public AnvilButton(ItemStack item, AnvilButtonConfirmAction<PluginType> confirmAction, AnvilButtonCancelAction<PluginType> cancelAction) {
+    public AnvilButton(ItemStack item, AnvilButtonConfirmAction confirmAction, AnvilButtonCancelAction cancelAction) {
         this.item = item;
         this.confirmAction = confirmAction;
         this.cancelAction = cancelAction;
@@ -34,11 +35,11 @@ public class AnvilButton<PluginType extends JavaPlugin> implements GUIButton<Plu
     }
 
     @Override
-    public void click(ClickType clickType, GUIPage<PluginType> page) {
+    public void click(ClickType clickType, GUIPage page) {
         this.player = page.getPlayer();
         this.plugin = page.getPlugin();
 
-        AnvilGUI<JavaPlugin> gui = new AnvilGUI<>(page.getPlugin(), page.getPlayer(), event -> {
+        AnvilGUI gui = new AnvilGUI(page.getPlugin(), page.getPlayer(), event -> {
             event.setWillDestroy(true);
 
             if(event.getSlot() == AnvilSlot.OUTPUT){
@@ -54,12 +55,12 @@ public class AnvilButton<PluginType extends JavaPlugin> implements GUIButton<Plu
         gui.open();
     }
 
-    public AnvilButton<PluginType> confirmAction(AnvilButtonConfirmAction<PluginType> confirmAction) {
+    public AnvilButton confirmAction(AnvilButtonConfirmAction confirmAction) {
         this.confirmAction = confirmAction;
         return this;
     }
 
-    public AnvilButton<PluginType> cancelAction(AnvilButtonCancelAction<PluginType> cancelAction) {
+    public AnvilButton cancelAction(AnvilButtonCancelAction cancelAction) {
         this.cancelAction = cancelAction;
         return this;
     }
@@ -69,7 +70,7 @@ public class AnvilButton<PluginType extends JavaPlugin> implements GUIButton<Plu
         return item;
     }
 
-    public AnvilButton<PluginType> slot(final AnvilSlot slot, final ItemStack item) {
+    public AnvilButton slot(final AnvilSlot slot, final ItemStack item) {
         this.items.put(slot, item);
         return this;
     }

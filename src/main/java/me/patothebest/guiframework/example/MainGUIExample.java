@@ -6,13 +6,14 @@ import me.patothebest.guiframework.itemstack.ItemStackBuilder;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitTask;
 
-public class MainGUIExample extends GUIPage<MainClass> {
+public class MainGUIExample extends GUIPage {
 
     private final BukkitTask task;
 
-    public MainGUIExample(MainClass plugin, Player player) {
+    public MainGUIExample(Plugin plugin, Player player) {
         super(plugin, player, "GUI Test", 9);
         task = plugin.getServer().getScheduler().runTaskTimer(plugin, this::refresh, 20L, 20L);
         build();
@@ -32,11 +33,11 @@ public class MainGUIExample extends GUIPage<MainClass> {
                 .name(ChatColor.GREEN + "Static Paginated GUI")
                 .lore(ChatColor.WHITE + "This is an example of a menu", ChatColor.WHITE + "using a DynamicPaginatedUI");
 
-        addButton(new SimpleButton<MainClass>(simpleUI).action((plugin, player, page) -> {
+        addButton(new SimpleButton(simpleUI).action((plugin, player, page) -> {
             new SimpleGUIExample(plugin, player);
         }), 2);
 
-        addButton(new SimpleButton<MainClass>(staticPaginatedUI).action((plugin, player, page) -> {
+        addButton(new SimpleButton(staticPaginatedUI).action((plugin, player, page) -> {
             new StaticPaginatedGUIExample(plugin, player);
         }), 6);
     }

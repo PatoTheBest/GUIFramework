@@ -12,20 +12,21 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 
-public class AnvilGUI<PluginType extends JavaPlugin> implements Listener {
+public class AnvilGUI implements Listener {
 
     private final Player player;
     private final HashMap<AnvilSlot, ItemStack> items;
     private final AnvilClickEventHandler handler;
     private Inventory inv;
 
-    public AnvilGUI(final PluginType plugin, final Player player, final AnvilClickEventHandler handler) {
+    public AnvilGUI(final Plugin plugin, final Player player, final AnvilClickEventHandler handler) {
         super();
         this.items = new HashMap<>();
         this.player = player;

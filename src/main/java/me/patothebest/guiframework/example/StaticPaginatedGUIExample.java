@@ -9,17 +9,18 @@ import me.patothebest.guiframework.itemstack.ItemStackBuilder;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 
 import java.util.stream.Collectors;
 
-public class StaticPaginatedGUIExample extends StaticPaginatedUI<Material, MainClass> {
+public class StaticPaginatedGUIExample extends StaticPaginatedUI<Material> {
 
-    public StaticPaginatedGUIExample(MainClass plugin, Player player) {
+    public StaticPaginatedGUIExample(Plugin plugin, Player player) {
         super(plugin, player, "Testing the gui framework", () -> Compatibility.COMPATIBLE_MATERIALS);
         build();
     }
 
-    public StaticPaginatedGUIExample(MainClass plugin, Player player, String filter) {
+    public StaticPaginatedGUIExample(Plugin plugin, Player player, String filter) {
         super(plugin, player, "Testing the gui framework", () -> Compatibility.COMPATIBLE_MATERIALS
                 .stream()
                 .filter(material -> material.name().contains(filter.toUpperCase()))
@@ -28,15 +29,15 @@ public class StaticPaginatedGUIExample extends StaticPaginatedUI<Material, MainC
     }
 
     @Override
-    protected GUIButton<MainClass> createButton(Material material) {
-        return new SimpleButton<MainClass>(new ItemStackBuilder(material).lore(ChatColor.GREEN + "Click to get!")).action((plugin, player, page) -> {
+    protected GUIButton createButton(Material material) {
+        return new SimpleButton(new ItemStackBuilder(material).lore(ChatColor.GREEN + "Click to get!")).action((plugin, player, page) -> {
             player.getInventory().addItem(new ItemStackBuilder(material));
         });
     }
 
     @Override
     protected void buildFooter() {
-        addButton(new AnvilButton<MainClass>(new ItemStackBuilder().material(Material.BOOK).name("Filter"))
+        addButton(new AnvilButton(new ItemStackBuilder().material(Material.BOOK).name("Filter"))
                 .confirmAction((plugin, player, event) -> {
                     new StaticPaginatedGUIExample(plugin, player, event.getOutput());
                 }).cancelAction(StaticPaginatedGUIExample::new)

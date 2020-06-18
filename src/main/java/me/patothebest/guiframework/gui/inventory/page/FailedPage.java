@@ -7,13 +7,14 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class FailedPage<PluginType extends JavaPlugin> extends GUIPage<PluginType> {
+public class FailedPage extends GUIPage {
 
     private String[] reason;
 
-    public FailedPage(PluginType plugin, Player player, String... reason) {
+    public FailedPage(Plugin plugin, Player player, String... reason) {
         super(plugin, player, "Error!", 54);
         this.reason = reason;
         build();
