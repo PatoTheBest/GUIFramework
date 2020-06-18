@@ -23,8 +23,8 @@ public abstract class ConfirmationPage<PluginType extends JavaPlugin> extends GU
     }
 
     public void buildPage() {
-        ItemStack confirm = new ItemStackBuilder().setMaterial(Material.EMERALD_BLOCK).setName(ChatColor.GREEN + "CONFIRM");
-        ItemStack cancel = new ItemStackBuilder().setMaterial(Material.REDSTONE_BLOCK).setName(ChatColor.RED + "CANCEL");
+        ItemStack confirm = new ItemStackBuilder().material(Material.EMERALD_BLOCK).name(ChatColor.GREEN + "CONFIRM");
+        ItemStack cancel = new ItemStackBuilder().material(Material.REDSTONE_BLOCK).name(ChatColor.RED + "CANCEL");
 
         addButton(new PlaceHolder(infoTop), 4);
         addButton(new PlaceHolder(infoMiddle), 22);

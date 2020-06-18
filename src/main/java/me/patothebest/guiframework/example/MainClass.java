@@ -9,7 +9,12 @@ public class MainClass extends JavaPlugin {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        new GUITest(this, (Player) sender);
+        if (!(sender instanceof Player)) {
+            sender.sendMessage("I'm sorry, this command can only be executed by players!");
+            return false;
+        }
+
+        new MainGUIExample(this, (Player) sender);
         return true;
     }
 }

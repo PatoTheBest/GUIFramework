@@ -263,4 +263,17 @@ public class Utils {
 
         return null;
     }
+
+    /**
+     * Transforms a number to a multiple of nine for the use in
+     * bukkit inventories, since they require the size to be a
+     * multiple of nine
+     *
+     * @param size the size of the list
+     *
+     * @return the transformed slot
+     */
+    public static int transformToInventorySize(long size) {
+        return Math.min(((int) Math.ceil((Math.max(1, size)) / 9.0)) * 9, 54);
+    }
 }

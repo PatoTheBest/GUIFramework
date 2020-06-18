@@ -20,7 +20,7 @@ public class FailedPage<PluginType extends JavaPlugin> extends GUIPage<PluginTyp
     }
 
     public void buildPage() {
-        ItemStack confirm = new ItemStackBuilder().setMaterial(Material.REDSTONE_BLOCK).setName(ChatColor.RED + "ERROR:").setLore(reason);
+        ItemStack confirm = new ItemStackBuilder().material(Material.REDSTONE_BLOCK).name(ChatColor.RED + "ERROR:").lore(reason);
         for (int i = 0; i < 54; i++) {
             addButton(new PlaceHolder(confirm), i);
         }

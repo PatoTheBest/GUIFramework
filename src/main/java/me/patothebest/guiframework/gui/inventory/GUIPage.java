@@ -19,13 +19,13 @@ public abstract class GUIPage<PluginType extends JavaPlugin> implements Listener
 
     protected final HashMap<Integer, GUIButton> buttons;
     protected final PluginType plugin;
-    protected boolean overrideClose = false;
-    protected final boolean blockInventoryMovement = true;
     protected final int size;
+    protected boolean overrideClose = false;
+    protected boolean blockInventoryMovement = true;
 
-    private final Inventory menu;
     private final Player user;
-    private final String name;
+    private String name;
+    private Inventory menu;
 
     public GUIPage(PluginType plugin, Player player, String rawName, int size, boolean override) {
         this(plugin, player, rawName, size);
@@ -85,6 +85,27 @@ public abstract class GUIPage<PluginType extends JavaPlugin> implements Listener
         buttons.put(slot, button);
     }
 
+    public void addButton(GUIButton button) {
+        int slot = 0;
+        while(!isFree(slot) && slot < size) {
+            slot++;
+        }
+
+        if(slot > size || !isFree(slot)) {
+            System.err.println("Could not find empty slot");
+            System.err.println("Button= " + button.toString());
+            System.err.println("Slot= " + slot);
+            System.err.println("Menu= " + toString());
+            return;
+        }
+
+        if(!(button instanceof NullButton)) {
+            menu.setItem(slot, button.getItem());
+        }
+
+        buttons.put(slot, button);
+    }
+
     public void removeButton(int slot) {
         menu.setItem(slot, null);
 
@@ -108,6 +129,15 @@ public abstract class GUIPage<PluginType extends JavaPlugin> implements Listener
         build();
     }
 
+    public void setTitle(String title) {
+        removeAll();
+        name = (title.length() > 32 ? title.substring(0, 32) : title);
+        this.menu = Bukkit.getServer().createInventory(null, size, name);
+        Utils.setFieldValue(Utils.getNMSClass("EntityHuman"), "activeContainer", Utils.invokeMethod(user, "getHandle", new Class[] {}, null), Utils.getFieldValue(Utils.getNMSClass("EntityHuman"), "defaultContainer", Utils.invokeMethod(user, "getHandle", new Class[] {}, null)));
+        user.openInventory(menu);
+        build();
+    }
+
     public boolean isFree(int slot) {
         return !buttons.keySet().contains(slot);
     }
@@ -124,6 +154,10 @@ public abstract class GUIPage<PluginType extends JavaPlugin> implements Listener
         }
 
         Player player = (Player) event.getPlayer();
+
+        if (!user.getOpenInventory().getTitle().equalsIgnoreCase(name)) {
+            return;
+        }
 
         if (user.getName().equalsIgnoreCase(player.getName())) {
             destroy();
@@ -150,15 +184,14 @@ public abstract class GUIPage<PluginType extends JavaPlugin> implements Listener
 
         event.setCancelled(true);
 
-        buttons.get(event.getRawSlot()).click(this);
+        buttons.get(event.getRawSlot()).click(event.getClick(), this);
     }
 
-    public abstract void destroy();
+    public void destroy() {};
 
     public void destroyInternal() {
         HandlerList.unregisterAll(this);
         this.buttons.values().forEach(GUIButton::destroy);
         this.buttons.clear();
     }
-
 }

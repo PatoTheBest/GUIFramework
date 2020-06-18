@@ -13,7 +13,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 public abstract class GUIMultiPage<PluginType extends JavaPlugin> extends GUIPage<PluginType> {
 
     protected int currentPage;
-    protected int pageSize = 44;
+    protected int pageSize = 45;
 
     public GUIMultiPage(PluginType plugin, Player player, String rawName) {
         this(plugin, player, rawName, 54);
@@ -24,16 +24,16 @@ public abstract class GUIMultiPage<PluginType extends JavaPlugin> extends GUIPag
     }
 
     public void buildPage() {
-        ItemStack nextPage = new ItemStackBuilder().setMaterial(Material.PAPER).setStackAmount(currentPage + 2).setName(ChatColor.YELLOW + "Click to go to next page (page " + (currentPage + 2) + ")");
-        ItemStack previousPage = new ItemStackBuilder().setMaterial(Material.PAPER).setStackAmount(currentPage).setName(ChatColor.YELLOW + "Click to go to previous page (page " + (currentPage) + ")");
-        ItemStack currentPageItem = new ItemStackBuilder().setMaterial(Material.PAPER).setStackAmount(currentPage + 1).setName(ChatColor.YELLOW + "You are currently on page " + (currentPage + 1) + "");
+        ItemStack nextPage = new ItemStackBuilder().material(Material.PAPER).amount(currentPage + 2).name(ChatColor.YELLOW + "Click to go to next page (page " + (currentPage + 2) + ")");
+        ItemStack previousPage = new ItemStackBuilder().material(Material.PAPER).amount(currentPage).name(ChatColor.YELLOW + "Click to go to previous page (page " + (currentPage) + ")");
+        ItemStack currentPageItem = new ItemStackBuilder().material(Material.PAPER).amount(currentPage + 1).name(ChatColor.YELLOW + "You are currently on page " + (currentPage + 1) + "");
 
         if ((currentPage + 1) * pageSize < getListCount()) {
-            addButton(new SimpleButton<>(nextPage).setAction((player, core, guiPage) -> {currentPage++;refresh();}), 53);
+            addButton(new SimpleButton<>(nextPage).action((player, core, guiPage) -> {currentPage++;refresh();}), 53);
         }
 
         if (currentPage != 0) {
-            addButton(new SimpleButton<>(previousPage).setAction((player, core, guiPage) -> {currentPage--;refresh();}), 45);
+            addButton(new SimpleButton<>(previousPage).action((player, core, guiPage) -> {currentPage--;refresh();}), 45);
         }
 
         if(getListCount() != -1) {

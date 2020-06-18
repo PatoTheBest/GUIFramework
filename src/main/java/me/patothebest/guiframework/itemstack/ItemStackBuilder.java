@@ -25,12 +25,12 @@ public class ItemStackBuilder extends ItemStack {
 
     public ItemStackBuilder(Material material) {
         super(material);
-        setLore(new ArrayList<>());
+        lore(new ArrayList<>());
     }
 
     public ItemStackBuilder(ItemStack itemStack) {
         setData(itemStack.getData());
-        setStackData(itemStack.getDurability());
+        data(itemStack.getDurability());
         setAmount(itemStack.getAmount());
         setType(itemStack.getType());
         setItemMeta(itemStack.getItemMeta());
@@ -38,48 +38,48 @@ public class ItemStackBuilder extends ItemStack {
 
     public ItemStackBuilder(ItemStack itemStack, Object n) {
         setData(itemStack.getData());
-        setStackData(itemStack.getDurability());
+        data(itemStack.getDurability());
         setAmount(itemStack.getAmount());
         setType(itemStack.getType());
     }
 
-    public ItemStackBuilder setMaterial(Material material) {
+    public ItemStackBuilder material(Material material) {
         setType(material);
         return this;
     }
 
-    public ItemStackBuilder changeAmount(int change) {
+    public ItemStackBuilder addAmount(int change) {
         setAmount(getAmount() + change);
         return this;
     }
 
-    public ItemStackBuilder setStackAmount(int amount) {
+    public ItemStackBuilder amount(int amount) {
         setAmount(amount);
         return this;
     }
 
-    public ItemStackBuilder setStackData(short data) {
+    public ItemStackBuilder data(short data) {
         setDurability(data);
         return this;
     }
 
-    public ItemStackBuilder setStackData(MaterialData data) {
+    public ItemStackBuilder data(MaterialData data) {
         setData(data);
         return this;
     }
 
-    public ItemStackBuilder setEnchantments(HashMap<Enchantment, Integer> enchantments) {
+    public ItemStackBuilder enchantments(HashMap<Enchantment, Integer> enchantments) {
         getEnchantments().keySet().forEach(this::removeEnchantment);
         addUnsafeEnchantments(enchantments);
         return this;
     }
 
-    public ItemStackBuilder addEnchantmentToStack(Enchantment enchantment, int level) {
+    public ItemStackBuilder enchant(Enchantment enchantment, int level) {
         addUnsafeEnchantment(enchantment, level);
         return this;
     }
 
-    public ItemStackBuilder setName(String name) {
+    public ItemStackBuilder name(String name) {
         if (name == null) {
             return this;
         }
@@ -90,6 +90,7 @@ public class ItemStackBuilder extends ItemStack {
         return this;
     }
 
+    @Override
     public void setData(MaterialData data) {
         Field dataField;
         try {
@@ -101,52 +102,24 @@ public class ItemStackBuilder extends ItemStack {
         }
     }
 
-    public ItemStackBuilder setEnchantedBook(Enchantment ench, int level) {
+    public ItemStackBuilder enchantedBook(Enchantment ench, int level) {
         EnchantmentStorageMeta meta = (EnchantmentStorageMeta)getItemMeta();
         meta.addEnchant(ench, level, true);
         return this;
     }
 
-    public ItemStackBuilder setColor(int red, int green, int blue) {
-        return setColor(Color.fromRGB(red, green, blue));
+    public ItemStackBuilder color(int red, int green, int blue) {
+        return color(Color.fromRGB(red, green, blue));
     }
 
-    public ItemStackBuilder setColor(Color color) {
+    public ItemStackBuilder color(Color color) {
         LeatherArmorMeta leatherArmorMeta = (LeatherArmorMeta) getItemMeta();
         leatherArmorMeta.setColor(color);
         setItemMeta(leatherArmorMeta);
         return this;
     }
 
-    public ItemStackBuilder createBackItem() {
-        setMaterial(Material.ARROW);
-        setName(ChatColor.RED + "Back");
-        return this;
-    }
-
-    public ItemStackBuilder createTogglableItem(boolean enabled) {
-        if(enabled) {
-            return createEnabledItem();
-        }
-
-        return createDisabledItem();
-    }
-
-    public ItemStackBuilder createEnabledItem() {
-        setMaterial(Material.INK_SACK);
-        setStackData((short) 10);
-        setName(ChatColor.GREEN + "enabled");
-        return this;
-    }
-
-    public ItemStackBuilder createDisabledItem() {
-        setMaterial(Material.INK_SACK);
-        setStackData((short) 8);
-        setName(ChatColor.GREEN + "disabled");
-        return this;
-    }
-
-    public ItemStackBuilder addBlankLore() {
+    public ItemStackBuilder addBlankLineLore() {
         addLore(" ");
         return this;
     }
@@ -157,21 +130,6 @@ public class ItemStackBuilder extends ItemStack {
 
     public ItemStackBuilder addLineLore(int length) {
         addLore("&8&m&l" + Strings.repeat("-", length));
-        return this;
-    }
-
-    public ItemStackBuilder setSkullOwner(String owner) {
-        setMaterial(Material.SKULL_ITEM);
-        SkullMeta meta = (SkullMeta) Bukkit.getItemFactory().getItemMeta(Material.SKULL_ITEM);
-        meta.setOwner(owner);
-        setStackData((short) 3);
-        setItemMeta(meta);
-        return this;
-    }
-
-    public ItemStackBuilder createPlayerHead() {
-        setMaterial(Material.SKULL_ITEM);
-        setStackData((short) 3);
         return this;
     }
 
@@ -203,7 +161,7 @@ public class ItemStackBuilder extends ItemStack {
         return this;
     }
 
-    public ItemStackBuilder setLore(String... lore) {
+    public ItemStackBuilder lore(String... lore) {
         if (lore == null) {
             return this;
         }
@@ -213,7 +171,7 @@ public class ItemStackBuilder extends ItemStack {
         return this;
     }
 
-    public ItemStackBuilder setLore(List<String> lore) {
+    public ItemStackBuilder lore(List<String> lore) {
         if (lore == null) {
             return this;
         }

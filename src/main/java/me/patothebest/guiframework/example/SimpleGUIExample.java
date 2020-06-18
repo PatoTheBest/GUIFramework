@@ -10,29 +10,24 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
-public class GUITest extends GUIPage<MainClass> {
+public class SimpleGUIExample extends GUIPage<MainClass> {
 
-    public GUITest(MainClass plugin, Player player) {
+    public SimpleGUIExample(MainClass plugin, Player player) {
         super(plugin, player, "Testing the gui framework", 9);
         build();
     }
 
     @Override
     public void buildPage() {
-        ItemStackBuilder simpleAction = new ItemStackBuilder().setMaterial(Material.TNT).setName(ChatColor.RED + "A TNT");
-        ItemStackBuilder anvilItem = new ItemStackBuilder().setMaterial(Material.ANVIL).setName("AN ANVIL");
-        ItemStackBuilder placeHolder = new ItemStackBuilder().setMaterial(Material.ITEM_FRAME).setName(ChatColor.GREEN + "This is just a placeholder");
+        ItemStackBuilder simpleAction = new ItemStackBuilder().material(Material.TNT).name(ChatColor.RED + "A TNT");
+        ItemStackBuilder anvilItem = new ItemStackBuilder().material(Material.ANVIL).name("AN ANVIL");
+        ItemStackBuilder placeHolder = new ItemStackBuilder().material(Material.ITEM_FRAME).name(ChatColor.GREEN + "This is just a placeholder");
 
         addButton(new SimpleButton<>(simpleAction, (plugin1, player, page) -> player.sendMessage("Clicked on TNT")), 2);
-        addButton(new AnvilButton<>(anvilItem).setConfirmAction((plugin1, player, event) -> {
+        addButton(new AnvilButton<>(anvilItem).confirmAction((plugin1, player, event) -> {
             player.sendMessage("You typed " + event.getOutput());
             event.setWillClose(true);
-        }).setCancelAction((plugin1, player) -> player.sendMessage("You cancelled")).setSlot(AnvilSlot.INPUT_LEFT, anvilItem), 4);
+        }).cancelAction((plugin1, player) -> player.sendMessage("You cancelled")).slot(AnvilSlot.INPUT_LEFT, anvilItem), 4);
         addButton(new PlaceHolder(placeHolder), 6);
-    }
-
-    @Override
-    public void destroy() {
-
     }
 }

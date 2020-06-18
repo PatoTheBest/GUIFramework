@@ -22,7 +22,7 @@ public abstract class SuccessPage<PluginType extends JavaPlugin> extends GUIPage
     }
 
     public void buildPage() {
-        ItemStack confirm = new ItemStackBuilder().setMaterial(Material.EMERALD_BLOCK).setName(ChatColor.GREEN + "Success!");
+        ItemStack confirm = new ItemStackBuilder().material(Material.EMERALD_BLOCK).name(ChatColor.GREEN + "Success!");
         for (int i = 0; i < 54; i++) {
             addButton(new PlaceHolder(confirm), i);
         }

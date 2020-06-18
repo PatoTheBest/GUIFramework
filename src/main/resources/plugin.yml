@@ -1,6 +1,6 @@
-output: GUIFramework
+name: GUIFramework
 version: 1.0
-main: com.minebone.guiframework.example.MainClass
+main: me.patothebest.guiframework.example.MainClass
 commands:
   testframework:
     description: Testing

@@ -5,6 +5,7 @@ import me.patothebest.guiframework.gui.anvil.AnvilGUI;
 import me.patothebest.guiframework.gui.anvil.AnvilSlot;
 import me.patothebest.guiframework.gui.inventory.GUIButton;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -33,7 +34,7 @@ public class AnvilButton<PluginType extends JavaPlugin> implements GUIButton<Plu
     }
 
     @Override
-    public void click(GUIPage<PluginType> page) {
+    public void click(ClickType clickType, GUIPage<PluginType> page) {
         this.player = page.getPlayer();
         this.plugin = page.getPlugin();
 
@@ -53,12 +54,12 @@ public class AnvilButton<PluginType extends JavaPlugin> implements GUIButton<Plu
         gui.open();
     }
 
-    public AnvilButton<PluginType> setConfirmAction(AnvilButtonConfirmAction<PluginType> confirmAction) {
+    public AnvilButton<PluginType> confirmAction(AnvilButtonConfirmAction<PluginType> confirmAction) {
         this.confirmAction = confirmAction;
         return this;
     }
 
-    public AnvilButton<PluginType> setCancelAction(AnvilButtonCancelAction<PluginType> cancelAction) {
+    public AnvilButton<PluginType> cancelAction(AnvilButtonCancelAction<PluginType> cancelAction) {
         this.cancelAction = cancelAction;
         return this;
     }
@@ -68,7 +69,7 @@ public class AnvilButton<PluginType extends JavaPlugin> implements GUIButton<Plu
         return item;
     }
 
-    public AnvilButton<PluginType> setSlot(final AnvilSlot slot, final ItemStack item) {
+    public AnvilButton<PluginType> slot(final AnvilSlot slot, final ItemStack item) {
         this.items.put(slot, item);
         return this;
     }
