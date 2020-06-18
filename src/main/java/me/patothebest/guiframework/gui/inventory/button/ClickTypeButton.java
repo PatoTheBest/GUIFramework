@@ -34,7 +34,7 @@ public class ClickTypeButton implements GUIButton {
             return;
         }
 
-        action.onClick(page.getPlugin(), page.getPlayer(), clickType, page);
+        action.onClick(clickType);
     }
 
     public void destroy() {

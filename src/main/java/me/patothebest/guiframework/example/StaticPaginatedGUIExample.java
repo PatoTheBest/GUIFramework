@@ -30,7 +30,7 @@ public class StaticPaginatedGUIExample extends StaticPaginatedUI<Material> {
 
     @Override
     protected GUIButton createButton(Material material) {
-        return new SimpleButton(new ItemStackBuilder(material).lore(ChatColor.GREEN + "Click to get!")).action((plugin, player, page) -> {
+        return new SimpleButton(new ItemStackBuilder(material).lore(ChatColor.GREEN + "Click to get!")).onClick(() -> {
             player.getInventory().addItem(new ItemStackBuilder(material));
         });
     }
@@ -38,9 +38,8 @@ public class StaticPaginatedGUIExample extends StaticPaginatedUI<Material> {
     @Override
     protected void buildFooter() {
         addButton(new AnvilButton(new ItemStackBuilder().material(Material.BOOK).name("Filter"))
-                .confirmAction((plugin, player, event) -> {
-                    new StaticPaginatedGUIExample(plugin, player, event.getOutput());
-                }).cancelAction(StaticPaginatedGUIExample::new)
-                .slot(AnvilSlot.INPUT_LEFT, new ItemStackBuilder().material(Material.BOOK).name("Dirt")), 51);
+                .onConfirm((event) -> new StaticPaginatedGUIExample(plugin, player, event.getOutput()))
+                .onCancel(() -> new StaticPaginatedGUIExample(plugin, player))
+                .useSlot(AnvilSlot.INPUT_LEFT, new ItemStackBuilder().material(Material.BOOK).name("Dirt")), 51);
     }
 }

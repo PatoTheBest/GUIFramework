@@ -17,8 +17,7 @@ public class PlaceHolder implements GUIButton {
         return item;
     }
 
-    public void click(ClickType clickType, GUIPage page) {
-    }
+    public void click(ClickType clickType, GUIPage page) { }
 
     public void destroy() {
         this.item = null;

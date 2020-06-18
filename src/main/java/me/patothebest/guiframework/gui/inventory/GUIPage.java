@@ -12,7 +12,6 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.plugin.Plugin;
-import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.HashMap;
 
@@ -20,11 +19,11 @@ public abstract class GUIPage implements Listener {
 
     protected final HashMap<Integer, GUIButton> buttons;
     protected final Plugin plugin;
+    protected final Player player;
     protected final int size;
     protected boolean overrideClose = false;
     protected boolean blockInventoryMovement = true;
 
-    private final Player user;
     private String name;
     private Inventory menu;
 
@@ -34,7 +33,7 @@ public abstract class GUIPage implements Listener {
     }
 
     public GUIPage(Plugin plugin, Player player, String rawName, int size) {
-        this.user = player;
+        this.player = player;
         Utils.invokeStaticMethod(Utils.getCBSClass("event.CraftEventFactory"), "handleInventoryCloseEvent", new Class[] {Utils.getNMSClass("EntityHuman")}, Utils.invokeMethod(player, "getHandle", new Class[] {}, null));
 
         this.plugin = plugin;
@@ -46,7 +45,7 @@ public abstract class GUIPage implements Listener {
         this.menu = Bukkit.getServer().createInventory(null, size, name);
 
         Utils.setFieldValue(Utils.getNMSClass("EntityHuman"), "activeContainer", Utils.invokeMethod(player, "getHandle", new Class[] {}, null), Utils.getFieldValue(Utils.getNMSClass("EntityHuman"), "defaultContainer", Utils.invokeMethod(player, "getHandle", new Class[] {}, null)));
-        user.openInventory(menu);
+        this.player.openInventory(menu);
     }
 
     public void build() {
@@ -70,7 +69,7 @@ public abstract class GUIPage implements Listener {
     }
 
     public Player getPlayer() {
-        return user;
+        return player;
     }
 
     public void addButton(GUIButton button, int slot) {
@@ -133,8 +132,8 @@ public abstract class GUIPage implements Listener {
         removeAll();
         name = (title.length() > 32 ? title.substring(0, 32) : title);
         this.menu = Bukkit.getServer().createInventory(null, size, name);
-        Utils.setFieldValue(Utils.getNMSClass("EntityHuman"), "activeContainer", Utils.invokeMethod(user, "getHandle", new Class[] {}, null), Utils.getFieldValue(Utils.getNMSClass("EntityHuman"), "defaultContainer", Utils.invokeMethod(user, "getHandle", new Class[] {}, null)));
-        user.openInventory(menu);
+        Utils.setFieldValue(Utils.getNMSClass("EntityHuman"), "activeContainer", Utils.invokeMethod(player, "getHandle", new Class[] {}, null), Utils.getFieldValue(Utils.getNMSClass("EntityHuman"), "defaultContainer", Utils.invokeMethod(player, "getHandle", new Class[] {}, null)));
+        player.openInventory(menu);
         build();
     }
 
@@ -155,11 +154,11 @@ public abstract class GUIPage implements Listener {
 
         Player player = (Player) event.getPlayer();
 
-        if (!user.getOpenInventory().getTitle().equalsIgnoreCase(name)) {
+        if (!this.player.getOpenInventory().getTitle().equalsIgnoreCase(name)) {
             return;
         }
 
-        if (user.getName().equalsIgnoreCase(player.getName())) {
+        if (this.player.getName().equalsIgnoreCase(player.getName())) {
             destroy();
             destroyInternal();
         }
@@ -168,11 +167,11 @@ public abstract class GUIPage implements Listener {
     @EventHandler
     public void onClick(InventoryClickEvent event) {
         Player player = (Player) event.getWhoClicked();
-        if (!user.getName().equalsIgnoreCase(player.getName())) {
+        if (!this.player.getName().equalsIgnoreCase(player.getName())) {
             return;
         }
 
-        if (!user.getOpenInventory().getTitle().equalsIgnoreCase(name)) {
+        if (!this.player.getOpenInventory().getTitle().equalsIgnoreCase(name)) {
             return;
         }
 

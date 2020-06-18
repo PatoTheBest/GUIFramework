@@ -20,7 +20,7 @@ public class SimpleButton implements GUIButton {
         this.action = buttonAction;
     }
 
-    public SimpleButton action(ButtonAction action) {
+    public SimpleButton onClick(ButtonAction action) {
         this.action = action;
         return this;
     }
@@ -34,7 +34,7 @@ public class SimpleButton implements GUIButton {
             return;
         }
 
-        action.onClick(page.getPlugin(), page.getPlayer(), page);
+        action.onClick();
     }
 
     public void destroy() {

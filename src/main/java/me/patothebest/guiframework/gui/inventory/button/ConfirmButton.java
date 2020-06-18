@@ -8,8 +8,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class ConfirmButton extends SimpleButton {
 
-    private ItemStack item1;
-    private ItemStack item2;
+    private final ItemStack item1;
+    private final ItemStack item2;
 
     public ConfirmButton(ItemStack item, ItemStack item1, ItemStack item2) {
         super(item);
@@ -32,7 +32,7 @@ public class ConfirmButton extends SimpleButton {
                     return;
                 }
 
-                action.onClick(page.getPlugin(), page.getPlayer(), page);
+                action.onClick();
             }
 
             @Override

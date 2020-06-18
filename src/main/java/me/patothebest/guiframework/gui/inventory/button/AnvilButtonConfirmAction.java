@@ -5,8 +5,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
+@FunctionalInterface
 public interface AnvilButtonConfirmAction {
 
-    void onConfirm(Plugin plugin, Player player, AnvilClickEvent event);
+    void onConfirm(AnvilClickEvent event);
 
 }
