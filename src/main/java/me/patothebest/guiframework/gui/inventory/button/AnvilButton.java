@@ -19,8 +19,6 @@ public class AnvilButton implements GUIButton {
     private final Map<AnvilSlot, ItemStack> items;
     private AnvilButtonConfirmAction confirmAction;
     private AnvilButtonCancelAction cancelAction;
-    private Plugin plugin;
-    private Player player;
 
     public AnvilButton(ItemStack item) {
         this.item = item;
@@ -36,16 +34,13 @@ public class AnvilButton implements GUIButton {
 
     @Override
     public void click(ClickType clickType, GUIPage page) {
-        this.player = page.getPlayer();
-        this.plugin = page.getPlugin();
-
         AnvilGUI gui = new AnvilGUI(page.getPlugin(), page.getPlayer(), event -> {
             event.setWillDestroy(true);
 
             if(event.getSlot() == AnvilSlot.OUTPUT){
-                confirmAction.onConfirm(plugin, player, event);
+                confirmAction.onConfirm(event);
             } else {
-                cancelAction.onCancel(plugin, player);
+                cancelAction.onCancel();
             }
         });
         page.destroy();

@@ -13,9 +13,7 @@ public class NullButton implements GUIButton {
     }
 
     @Override
-    public void destroy() {
-
-    }
+    public void destroy() { }
 
     @Override
     public ItemStack getItem() {

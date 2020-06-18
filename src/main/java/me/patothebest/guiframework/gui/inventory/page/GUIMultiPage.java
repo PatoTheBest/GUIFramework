@@ -30,11 +30,11 @@ public abstract class GUIMultiPage extends GUIPage {
         ItemStack currentPageItem = new ItemStackBuilder().material(Material.PAPER).amount(currentPage + 1).name(ChatColor.YELLOW + "You are currently on page " + (currentPage + 1) + "");
 
         if ((currentPage + 1) * pageSize < getListCount()) {
-            addButton(new SimpleButton(nextPage).action((player, core, guiPage) -> {currentPage++;refresh();}), 53);
+            addButton(new SimpleButton(nextPage).action(() -> {currentPage++;refresh();}), 53);
         }
 
         if (currentPage != 0) {
-            addButton(new SimpleButton(previousPage).action((player, core, guiPage) -> {currentPage--;refresh();}), 45);
+            addButton(new SimpleButton(previousPage).action(() -> {currentPage--;refresh();}), 45);
         }
 
         if(getListCount() != -1) {

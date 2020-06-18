@@ -34,7 +34,7 @@ public class SimpleButton implements GUIButton {
             return;
         }
 
-        action.onClick(page.getPlugin(), page.getPlayer(), page);
+        action.onClick();
     }
 
     public void destroy() {
