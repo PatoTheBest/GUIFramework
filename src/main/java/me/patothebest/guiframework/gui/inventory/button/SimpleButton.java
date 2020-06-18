@@ -20,7 +20,7 @@ public class SimpleButton implements GUIButton {
         this.action = buttonAction;
     }
 
-    public SimpleButton action(ButtonAction action) {
+    public SimpleButton onClick(ButtonAction action) {
         this.action = action;
         return this;
     }

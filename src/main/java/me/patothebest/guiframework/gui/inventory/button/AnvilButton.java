@@ -50,12 +50,12 @@ public class AnvilButton implements GUIButton {
         gui.open();
     }
 
-    public AnvilButton confirmAction(AnvilButtonConfirmAction confirmAction) {
+    public AnvilButton onConfirm(AnvilButtonConfirmAction confirmAction) {
         this.confirmAction = confirmAction;
         return this;
     }
 
-    public AnvilButton cancelAction(AnvilButtonCancelAction cancelAction) {
+    public AnvilButton onCancel(AnvilButtonCancelAction cancelAction) {
         this.cancelAction = cancelAction;
         return this;
     }
@@ -65,7 +65,7 @@ public class AnvilButton implements GUIButton {
         return item;
     }
 
-    public AnvilButton slot(final AnvilSlot slot, final ItemStack item) {
+    public AnvilButton useSlot(final AnvilSlot slot, final ItemStack item) {
         this.items.put(slot, item);
         return this;
     }

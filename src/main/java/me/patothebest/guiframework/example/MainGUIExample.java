@@ -33,11 +33,11 @@ public class MainGUIExample extends GUIPage {
                 .name(ChatColor.GREEN + "Static Paginated GUI")
                 .lore(ChatColor.WHITE + "This is an example of a menu", ChatColor.WHITE + "using a DynamicPaginatedUI");
 
-        addButton(new SimpleButton(simpleUI).action(() -> {
+        addButton(new SimpleButton(simpleUI).onClick(() -> {
             new SimpleGUIExample(plugin, player);
         }), 2);
 
-        addButton(new SimpleButton(staticPaginatedUI).action(() -> {
+        addButton(new SimpleButton(staticPaginatedUI).onClick(() -> {
             new StaticPaginatedGUIExample(plugin, player);
         }), 6);
     }

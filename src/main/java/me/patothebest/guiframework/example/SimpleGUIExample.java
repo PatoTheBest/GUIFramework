@@ -20,17 +20,17 @@ public class SimpleGUIExample extends GUIPage {
 
     @Override
     public void buildPage() {
-        ItemStackBuilder simpleAction = new ItemStackBuilder().material(Material.TNT).name(ChatColor.RED + "A TNT");
+        ItemStackBuilder simpleActionItem = new ItemStackBuilder().material(Material.TNT).name(ChatColor.RED + "A TNT");
         ItemStackBuilder anvilItem = new ItemStackBuilder().material(Material.ANVIL).name("AN ANVIL");
         ItemStackBuilder placeHolder = new ItemStackBuilder().material(Material.ITEM_FRAME).name(ChatColor.GREEN + "This is just a placeholder");
 
-        addButton(new SimpleButton(simpleAction, () -> player.sendMessage("Clicked on TNT")), 2);
-        addButton(new AnvilButton(anvilItem).confirmAction((event) -> {
+        addButton(new SimpleButton(simpleActionItem, () -> player.sendMessage("Clicked on TNT")), 2);
+        addButton(new AnvilButton(anvilItem).onConfirm((event) -> {
             player.sendMessage("You typed " + event.getOutput());
             event.setWillClose(true);
-        }).cancelAction(() -> {
+        }).onCancel(() -> {
             player.sendMessage("You cancelled");
-        }).slot(AnvilSlot.INPUT_LEFT, anvilItem), 4);
+        }).useSlot(AnvilSlot.INPUT_LEFT, anvilItem), 4);
         addButton(new PlaceHolder(placeHolder), 6);
     }
 }
